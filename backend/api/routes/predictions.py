@@ -5,18 +5,10 @@ from fastapi import APIRouter
 from schemas.DemandQuery import ProductInfo
 
 
-# For local running
 current_dir = Path(__file__).resolve().parent
 path_to_model = current_dir.parent.parent / "model" / "best_model.pkl"
 with open(path_to_model, 'rb') as file:
      model = pickle.load(file)
-
-
-#  For docker
-# path_to_model = Path("/app/model/best_model.pkl")
-# with open(path_to_model, 'rb') as file:
-#     model = pickle.load(file)
-
 
 router = APIRouter(prefix="/predict")
 
