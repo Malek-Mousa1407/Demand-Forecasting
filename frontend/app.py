@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # --- Header ---
-st.title("📦 Inventory Restock Forecaster")
+st.title("Inventory Restock Forecaster")
 st.markdown("Review your current inventory levels, adjust the parameters, and generate ML-driven restock predictions in a single batch.")
 
 # --- 1. Interactive Input Table ---
