@@ -6,11 +6,11 @@ import streamlit as st
 import os
 
 # Replace with your live Render URL in production
-api_url = os.getenv("API_URL")
+api_url = os.getenv("API_URL", default="http://localhost:8000")
 endpoint = f"{api_url}/predict/expected-demand"
 
 st.set_page_config(page_title="Demand Forecasting Studio", layout="wide")
-st.header("📦 Unified Demand Forecasting Studio")
+st.header("📦 Inventory Demand Forecasting")
 st.write("Execute high-speed demand forecasts and restock schedules via bulk file upload or real-time manual item entry.")
 
 # Create two distinct workspace tabs
@@ -50,7 +50,7 @@ with tab_batch:
             st.dataframe(df_input, use_container_width=True, height=200)
             
             if st.button(f"⚡ Execute Batch Forecast ({len(df_input):,} Items)", type="primary", key="btn_batch"):
-                with st.spinner("Executing vectorized LightGBM inference..."):
+                with st.spinner("Predicting..."):
                     start_time = time.time()
                     try:
                         response = requests.post(endpoint, json=payload, timeout=180)
@@ -70,7 +70,7 @@ with tab_batch:
                                     df_results["Forecasted Weekly Demand"] - df_results["current_stock_level"]
                                 ).clip(lower=0).astype(int)
                             
-                            st.success("Batch processing complete! Logs written to PostgreSQL asynchronously.")
+                            st.success("Batch processing complete!")
                             
                             col1, col2, col3 = st.columns(3)
                             col1.metric("Total Items Processed", f"{len(df_results):,}")

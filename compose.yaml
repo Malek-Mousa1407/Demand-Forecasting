@@ -5,12 +5,6 @@ services:
       - "8000:8000"
     volumes:
       - "./backend:/app"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - "DATABASE_URL=postgresql://postgres:root@db:5432/postgres"
-
   dashboard:
     build: ./frontend
     ports:
