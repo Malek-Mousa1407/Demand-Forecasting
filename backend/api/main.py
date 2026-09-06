@@ -2,14 +2,13 @@ from fastapi import FastAPI, Request
 import time
 from routes.predictions import router as predictions_router
 
+
 api = FastAPI()
 
 
 @api.get('/')
 def prediction():
-    print("Hello Malek")
-    return {"Status": "ok"}
-
+    return {"Status": "1"}
 
 
 @api.middleware("http")
