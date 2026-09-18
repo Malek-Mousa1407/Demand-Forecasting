@@ -5,7 +5,6 @@ import pandas as pd
 import streamlit as st
 import os
 
-# Replace with your live Render URL in production
 api_url = os.getenv("API_URL", default="http://localhost:8000")
 endpoint = f"{api_url}/predict/expected-demand"
 
@@ -13,12 +12,9 @@ st.set_page_config(page_title="Demand Forecasting Studio", layout="wide")
 st.header("📦 Inventory Demand Forecasting")
 st.write("Execute high-speed demand forecasts and restock schedules via bulk file upload or real-time manual item entry.")
 
-# Create two distinct workspace tabs
 tab_batch, tab_manual = st.tabs(["📦 Batch File Upload", "📝 Manual Item Entry"])
 
-# ==========================================
-# TAB 1: HIGH-VOLUME BATCH FILE UPLOAD
-# ==========================================
+
 with tab_batch:
     uploaded_file = st.file_uploader(
         "Upload Inventory File (.txt, .json, or .csv with required model features)", 
@@ -106,13 +102,9 @@ with tab_batch:
             st.error(f"Error processing file: {e}")
 
 
-# ==========================================
-# TAB 2: REAL-TIME MANUAL ITEM ENTRY
-# ==========================================
 with tab_manual:
     st.subheader("Enter SKU Attributes for Instant Forecast")
-    
-    # Using an st.form prevents the UI from reloading every time a user types a number
+
     with st.form("manual_entry_form"):
         col1, col2, col3 = st.columns(3)
         
@@ -135,7 +127,6 @@ with tab_manual:
         if not product_id.strip():
             st.warning("Please enter a valid Product ID.")
         else:
-            # Package manual inputs into the exact dictionary structure expected by the API
             manual_payload = [{
                 "product_id": product_id.strip(),
                 "current_stock_level": int(current_stock),
@@ -148,7 +139,6 @@ with tab_manual:
             
             with st.spinner(f"Forecasting demand for {product_id}..."):
                 try:
-                    # Reuse the exact same optimized batch endpoint by sending a 1-item list!
                     response = requests.post(endpoint, json=manual_payload, timeout=10)
                     
                     if response.status_code == 200:
@@ -161,7 +151,6 @@ with tab_manual:
                         
                         st.success(f"Forecast generated and logged to PostgreSQL for item **{product_id}**!")
                         
-                        # High-impact visual metric display for single items
                         res_col1, res_col2, res_col3 = st.columns(3)
                         res_col1.metric("Current Stock Level", f"{current_stock:,} units")
                         res_col2.metric("Forecasted Weekly Demand", f"{forecasted_demand:,} units", delta=f"{forecasted_demand - current_stock} vs stock")
