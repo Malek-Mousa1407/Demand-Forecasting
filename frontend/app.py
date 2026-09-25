@@ -10,7 +10,7 @@ endpoint = f"{api_url}/predict/expected-demand"
 
 st.set_page_config(page_title="Demand Forecasting Studio", layout="wide")
 st.header("📦 Inventory Demand Forecasting")
-st.write("Execute high-speed demand forecasts and restock schedules via bulk file upload or real-time manual item entry.")
+st.write("Execute high-speed demand forecasts and restock schedules via bulk file upload or real-time manual item entry!")
 
 tab_batch, tab_manual = st.tabs(["📦 Batch File Upload", "📝 Manual Item Entry"])
 

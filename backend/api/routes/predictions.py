@@ -20,6 +20,8 @@ def prediction(payload: list[ProductInfo]):
 
     product_ids = data["product_id"]
 
+    print(product_ids)
+
     features = data.drop(columns=['product_id'])
     forcasted_demand = model.predict(features).tolist()
 
